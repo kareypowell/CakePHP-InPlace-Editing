@@ -54,6 +54,7 @@ The editing helper will allow you to add an `input` control to your views that w
 
 When the save button is pressed after modifying the in-place-edit element, a post is made to the inPlaceEditing (by default) controller action. You can add a function like this to handle the in-place-editing action.
     ```php
+    <?php
     public function in_place_editing($id = null) {
       
       if (!$id) return;
@@ -83,6 +84,7 @@ When the save button is pressed after modifying the in-place-edit element, a pos
       }
       
     }
+    ?>
     ```
 
 #### Create the action handler view
