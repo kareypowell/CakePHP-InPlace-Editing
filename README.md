@@ -39,7 +39,7 @@ Applying the `InPlaceEditing` helper to your controller is essentially the same 
 
 The editing helper will allow you to add an `input` control to your views that will behave like the a div element (by default, or any other HTML element if you wish) on your view until you click/double-click/hover/etc on it, then it will appear as a text input, or a drop-down list, or any element supported by [Jeditable](http://www.appelsiini.net/projects/jeditable) jQuery plugin.
   
-  `echo $this->inPlaceEditing->input('User', 'first_name', $user['User']['id'],
+  echo $this->inPlaceEditing->input('User', 'first_name', $user['User']['id'],
           array('value' => $user['User']['first_name'],
                 'actionName' => 'in_place_editing',
                 'type' => 'text',
@@ -48,7 +48,7 @@ The editing helper will allow you to add an `input` control to your views that w
                 'toolTip' => 'Click to edit First Name',
                 'containerType' => 'dd'
                 )
-          );`
+          );
 
 #### Add an action handler in your controller
 
@@ -88,7 +88,7 @@ When the save button is pressed after modifying the in-place-edit element, a pos
 
 Since you have a new action in your controller which is used for the in-place-editing functionality, you will need to add the in_place_editing view to your model’s views folder. And that view should display the updated result after save.
 
-  `echo $updated_value;`
+  * `echo $updated_value;`
 
 #### Enabling Ajax to prevent unwanted things from showing after the update.
 
