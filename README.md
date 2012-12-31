@@ -19,7 +19,7 @@ Go to your CakePHP `app/Plugin` directory.
 
 #### As an Archive  
 
-* `git clone git@github.com/kareypowell/CakePHP-InPlace-Editing.git InPlaceEditing`
+* `git clone https://github.com/kareypowell/CakePHP-InPlace-Editing.git InPlaceEditing`
 
 #### As a Submodule
 
