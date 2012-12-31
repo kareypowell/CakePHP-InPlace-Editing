@@ -98,9 +98,9 @@ Since you have a new action in your controller which is used for the in-place-ed
 
 * Next, we need to add some code to the `AppController::beforeRender()` action to check if the request coming through is an Ajax call and disable the debug as necessary. Here is the code:
 
-    if($this->RequestHandler->isAjax() || $this->RequestHandler->isXml()) {  
-      Configure::write('debug', 0);
-    }
+        if($this->RequestHandler->isAjax() || $this->RequestHandler->isXml()) {  
+          Configure::write('debug', 0);
+        }
 
 
 ## ToDo
