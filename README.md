@@ -39,6 +39,7 @@ Applying the `InPlaceEditing` helper to your controller is essentially the same 
 
 The editing helper will allow you to add an `input` control to your views that will behave like the a div element (by default, or any other HTML element if you wish) on your view until you click/double-click/hover/etc on it, then it will appear as a text input, or a drop-down list, or any element supported by [Jeditable](http://www.appelsiini.net/projects/jeditable) jQuery plugin.
   
+  <?php
   echo $this->inPlaceEditing->input('User', 'first_name', $user['User']['id'],
           array('value' => $user['User']['first_name'],
                 'actionName' => 'in_place_editing',
