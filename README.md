@@ -87,7 +87,8 @@ When the save button is pressed after modifying the in-place-edit element, a pos
 #### Create the action handler view
 
 Since you have a new action in your controller which is used for the in-place-editing functionality, you will need to add the in_place_editing view to your model’s views folder. And that view should display the updated result after save.
-      echo $updated_value;
+
+    echo $updated_value;
 
 #### Enabling Ajax to prevent unwanted things from showing after the update.
 
