@@ -105,7 +105,7 @@ Since you have a new action in your controller which is used for the in-place-ed
 
 ## ToDo
 
-* This version of the plugin is by no means perfect, but it works. I'll be working on making things a lot easier in the future updates.
+This version of the plugin is by no means perfect, but it works. I'll be working on making things a lot easier in the future updates.
 * Write tests.
 
 ## License
