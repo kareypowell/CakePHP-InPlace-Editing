@@ -5,7 +5,7 @@
  * Package:     CakePHP InPlaceEditing Plugin
  * Version:     0.0.1
  * Date:        2012-12-31
- * Description: CakePHP plugin for Inplace editing functionality of any 
+ * Description: CakePHP plugin for in-place-editing functionality of any 
  *				form element.
  * Author:      Karey H. Powell
  * Author URL:  http://kareypowell.com/
