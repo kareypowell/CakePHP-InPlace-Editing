@@ -33,12 +33,12 @@ class InPlaceEditingHelper extends AppHelper {
 		$containerType	= $this->__extractSetting($settings, 'containerType',	'div');
 
 		$script = "
-			<$containerType id=\"inplace_$fieldName\">$value</$containerType>
+			<$containerType id=\"inplace_$fieldName$id\">$value</$containerType>
 			<script type=\"text/javascript\">
 				$(
 					function()
 					{
-						$('#inplace_$fieldName').editable
+						$('#inplace_$fieldName$id').editable
 						(
 							'../$actionName/$id',
 							{
