@@ -1,6 +1,6 @@
 # InPlace Editing Plugin
 
-Version 0.0.1
+Version 1.0.0
 
 An in-place-edit plugin for [CakePHP](http://cakephp.org), which uses the power of jQuery. This plugin allows you to easily make any field in your views become editable.
 
@@ -9,21 +9,15 @@ Combined with the awesomeness of Ajax you can make changes to your data right fr
 ## Requirements
 
 * [jQuery](http://jquery.com/)
-* [Jeditable](http://www.appelsiini.net/projects/jeditable)
-* PHP version: PHP 5.3+
-* CakePHP version: 2.2.x
+* [Jeditable](https://github.com/NicolasCARPi/jquery_jeditable)
+* PHP version: PHP 7.1+
+* CakePHP version: 3.5.X
 
 ## Installation
 
-Go to your CakePHP `app/Plugin` directory.
-
-#### As an Archive  
-
-* `git clone https://github.com/kareypowell/CakePHP-InPlace-Editing.git InPlaceEditing`
-
-#### As a Submodule
-
-* `$ git submodule add https://github.com/kareypowell/CakePHP-InPlace-Editing.git InPlaceEditing`
+1. Go to your CakePHP App directory using a terminal.
+2. type `composer require emilushi/in-place-editing`
+3. once done type: `bin/cake plugin load emilushi/InPlaceEditing`
 
 ## Usage
 
