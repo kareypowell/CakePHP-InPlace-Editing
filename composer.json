@@ -8,6 +8,7 @@
         "cake3",
         "in-place-editing"
     ],
+    "homepage": "https://github.com/emilushi/CakePHP-InPlace-Editing",
     "require": {
         "cakephp/cakephp": "^3.5"
     },
