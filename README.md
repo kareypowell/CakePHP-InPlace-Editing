@@ -17,84 +17,73 @@ Combined with the awesomeness of Ajax you can make changes to your data right fr
 
 1. Go to your CakePHP App directory using a terminal.
 2. type `composer require emilushi/in-place-editing`
-3. once done type: `bin/cake plugin load emilushi/InPlaceEditing`
+3. To load the plugin type: `bin/cake plugin load InPlaceEditing`
+4. Under `src/View/Application.php` on `initialize` method add the following line: `$this->loadHelper('InPlaceEditing.InPlaceEditing');`
 
-## Usage
+#### Using InPlaceEditing on your view
 
-Applying the `InPlaceEditing` helper to your controller is essentially the same as applying any other CakePHP helpers.
-
-* In your `Config/bootstrap.php` load plugin with `CakePlugin::load('InPlaceEditing');`
-* Include InPlaceEditing helper in your controller with:
-  * `public $helpers = array('InPlaceEditing.InPlaceEditing');`
-
-### Next Steps
-
-#### Add an in-place-editing control to your view
-
-The editing helper will allow you to add an `input` control to your views that will behave like the a div element (by default, or any other HTML element if you wish) on your view until you click/double-click/hover/etc on it, then it will appear as a text input, or a drop-down list, or any element supported by [Jeditable](http://www.appelsiini.net/projects/jeditable) jQuery plugin.
+The editing helper will allow you to add an `input` control to your views that will behave like the a div element (by default, or any other HTML element if you wish) on your view until you click/double-click/hover/etc on it, then it will appear as a text input, or a drop-down list, or any element supported by [Jeditable](https://github.com/NicolasCARPi/jquery_jeditable) jQuery plugin.
+Let's assume our Model is **OrdersTable**, Controller **Orders** and field to edit is called **comments**. Add the code below under your view to generate the needed to field which will trigger `jeditable`.
   
-    echo $this->inPlaceEditing->input('User', 'first_name', $user['User']['id'],
-            array('value' => $user['User']['first_name'],
-                  'actionName' => 'in_place_editing',
-                  'type' => 'text',
-                  'cancelText' => 'Cancel',
-                  'submitText' => 'Save',
-                  'toolTip' => 'Click to edit First Name',
-                  'containerType' => 'dd'
-                  )
-            );
+    <?= $this->InPlaceEditing->input('Order', 'comments', $order->id, [
+        'value'         => $order->comments,
+        'actionName'    => $this->Url->build([
+            'controller' => 'orders',
+            'action'     => 'in_place_editing'
+        ]),
+        'type'          => 'textarea',
+        'rows'          => 4,
+        'cancelText'    => 'Cancel',
+        'submitText'    => 'Save',
+        'toolTip'       => 'Click to edit',
+        'containerType' => 'div'
+    ]) ?>
 
 #### Add an action handler in your controller
 
-When the save button is pressed after modifying the in-place-edit element, a post is made to the inPlaceEditing (by default) controller action. You can add a function like this to handle the in-place-editing action.
+Before you may need to disable security component for this specific action by adding: `$this->Security->setConfig('unlockedActions', ['inPlaceEditing']);` on `beforeFilter` method of your controller.
+Then add the following action on your controller which will update our **$order->comments** field and return the new value to the view.
     
-    public function in_place_editing($id = null) {
-      
-      if (!$id) return;
-
-      if ($this->request->data) {
-        # get all the fields with its values (there should be only one, but anyway ...)
-        foreach($this->data['User'] as $field => $value)
-        {
-          # check if the provided field name is acceptable
-          switch($field)
-          {
-            case 'zip':
-            case 'first_name':
-              break;
-            default:
-              $this->set('updated_value', '');
-            return;
-          }
-           
-          $this->User->id = $id;
-          $this->User->saveField($field, $value);
-           
-          $this->set('updated_value', $value);
-          $this->beforeRender(); 
-          $this->layout = 'ajax';
+    public function inPlaceEditing($id = null) {
+        $this->getRequest()->allowMethod('ajax');
+        
+        $order = $this-Orders->get($id);
+        
+        //You may need to unset data['id']
+        if(isset($data['id'])) {
+            unset($data['id']);
+        }      
+        
+        $order = $this->Orders->pathchEntity($order, $data);
+        
+        if($this->Orders->save($order)) {
+            $comment = $order->comments;
+        
+            $this->set(compact('comment'));
+            $this->set('_serialize', 'comment');
+            
+            $this->viewBuilder()->disableAutoLayout();
+            $this->viewBuilder()->setClassName('Ajax');
         }
-      }
-      
     }
 
 #### Create the action handler view
 
-Since you have a new action in your controller which is used for the in-place-editing functionality, you will need to add the in_place_editing view to your model’s views folder. And that view should display the updated result after save.
+Since we set the view class name to **Ajax** on our action we need to create a new ajax view on the above path:
 
-    echo $updated_value;
+    src/Template/Orders/ajax/in_place_editing.ctp
+    
+**Note, that you need to replace Orders with your own controller Name.** and on the new file you created add the above code:
 
-#### Enabling Ajax to prevent unwanted things from showing after the update.
+    echo $comment;
+    
+**Note, here as well you need to replace `$comment` with you own field.**
 
-* The first thing that should done is to enable the `Session` and `RequestHandler` components in your `AppController` or any controller of your choosing that you want to take advantage of this plugin with:
+#### Loading JS
 
-  `public $components = array('Session', 'RequestHandler');`
-
-* Next, we need to add some code to the `AppController::beforeRender()` action to check if the request coming through is an Ajax call and disable the debug as necessary. Here is the code:
-
-        if($this->RequestHandler->isAjax() || $this->RequestHandler->isXml()) {  
-          Configure::write('debug', 0);
-        }
+InPlaceEditingHelper will generate an input for your field and a piece of jQuery code for each field.
+The generated jQuery code is injected using `$this->Html->scriptBlock()` method which requires that you have somewhere on your layout a `fetch` method and it needs to be below the code you use for loading `jQuery` and `jquery-jeditable`.
+Which will look like: `<?= $this->fetch('script') ?>`
 
 
 ## ToDo

@@ -23,6 +23,8 @@ use Cake\View\Helper;
 class InPlaceEditingHelper extends Helper
 {
 
+    public $helpers = ['Html'];
+
     /*
      * Returns a script which contains a html element (type defined in a parameter) with the field contents.
      * And includes a script required for the inplace update ajax request logic.
@@ -37,29 +39,25 @@ class InPlaceEditingHelper extends Helper
         $toolTip       = $this::extractSetting($settings, 'toolTip', 'Click to edit.');
         $containerType = $this::extractSetting($settings, 'containerType', 'div');
 
-        $script = "
-			<$containerType id='inplace_".$modelName."_".$fieldName."_".$id."'>$value</$containerType>
-			<script type=\"text/javascript\">
-				$(
-					function()
-					{
-						$('#inplace_".$modelName."_".$fieldName."_".$id."').editable
-						(
-							'../$actionName/$id',
-							{
-								name      : 'data[$modelName][$fieldName]',
-								type      : '$type',
-								cancel    : '$cancelText',
-								submit    : '$submitText',
-								tooltip   : '$toolTip'
-							}
-						);
-					}
-				);
-			</script>
-		";
+        $elementID = 'inplace_'.$modelName.'_'.$fieldName.'_'.$id;
+        $input     = '<'.$containerType.' id="'.$elementID.'" class="in_place_editing">'.$value.'</'.$containerType.'>';
+        $script    = "$(function(){
+                        $('#$elementID').editable(
+                            '..$actionName/$id',
+                            {
+                                name      : '$fieldName',
+                                type      : '$type',
+                                cancel    : '$cancelText',
+                                submit    : '$submitText',
+                                tooltip   : '$toolTip',
+                                rows      : 5
+                            }
+                        );
+                    });";
 
-        return $script;
+        $this->Html->scriptBlock($script, ['block' => true]);
+
+        return $input;
     }
 
     /*
