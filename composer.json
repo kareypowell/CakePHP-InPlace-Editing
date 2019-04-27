@@ -1,0 +1,33 @@
+{
+    "name": "emilushi/in-place-editing",
+    "description": "An in-place-editor for CakePHP3",
+    "type": "cakephp-plugin",
+    "keywords": [
+        "cakephp",
+        "cakephp3",
+        "cake3",
+        "in-place-editing"
+    ],
+    "homepage": "https://github.com/emilushi/CakePHP-InPlace-Editing",
+    "require": {
+        "cakephp/cakephp": "^3.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "emilushi",
+            "homepage": "http://www.shomtek.com",
+            "email": "emilushi@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "InPlaceEditing\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "InPlaceEditing\\Test\\": "tests"
+        }
+    }
+}
